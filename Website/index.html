@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAT</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/ouL4Oou.png">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            font-family: sans-serif;
+        }
 
+        #theButton {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background-image: url('https://i.imgur.com/ouL4Oou.png');
+            background-size: cover;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #theButton:disabled {
+            opacity: 0.5;
+        }
+
+        #theButton:active {
+            transform: scale(0.9);
+        }
+
+        .link-container {
+            position: absolute;
+            bottom: 20px;
+        }
+
+        .app-link {
+            color: blue;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .app-link:hover {
+            text-decoration: none;
+        }
+
+        #clickCount {
+            margin-top: 10px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <button id="theButton"> </button>
+    <div id="clickCount">Clicks..</div>
+
+    <div class="link-container">
+        <a href="YOUR APP LINK" class="app-link" target="_blank">
+            Also try our android app
+        </a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR FIREBASE API KEY",
+            authDomain: "YOUR FIREBASE AUTH DOMAIN",
+            databaseURL: "YOUR FIREBASE DATABASE URL",
+            projectId: "YOUR FIREBASE PROJECT ID",
+            storageBucket: "YOUR FIREBASE STORAGE BUCKED",
+            messagingSenderId: "YOUR FIREBASE MESSAGING SENDER ID",
+            appId: "YOUR FIREBASE APP ID",
+            measurementId: "YOUR FIREBASE MEASUREMENT ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const clickCountRef = ref(db, '/clicks/clickcount');
+
+        async function loadClickCount() {
+            try {
+                const clickCountSnapshot = await get(clickCountRef);
+                let currentCount = clickCountSnapshot.exists() ? clickCountSnapshot.val() : 0;
+                document.getElementById('clickCount').textContent = `Clicks: ${currentCount}`;
+            } catch (error) {
+                console.error("Error loading click count:", error);
+            }
+        }
+
+        async function triggerBuzzer() {
+            const button = document.getElementById('theButton');
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.style.transform = 'scale(0.9)';
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            button.disabled = false;
+            button.style.opacity = 1;
+            button.style.transform = 'scale(1)';
+
+            const buzzerRef = ref(db, '/Buzzer');
+            set(buzzerRef, { state: 1 })
+                .then(() => console.log("Data successfully set!"))
+                .catch((error) => console.error("Error setting data:", error));
+
+            const clickCountSnapshot = await get(clickCountRef);
+            let currentCount = clickCountSnapshot.exists() ? clickCountSnapshot.val() : 0;
+            currentCount = Number(currentCount) + 1;
+
+            set(clickCountRef, currentCount)
+                .then(() => {
+                    console.log("Click count updated!");
+                    document.getElementById('clickCount').textContent = `Clicks: ${currentCount}`;
+                })
+                .catch((error) => console.error("Error updating click count:", error));
+        }
+
+        loadClickCount();
+        setInterval(loadClickCount, 250);
+
+        document.getElementById('theButton').onclick = triggerBuzzer;
+    </script>
+</body>
+</html>
