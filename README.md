@@ -52,7 +52,7 @@ The goal? To give others the ability to trigger your buzzer anytime, anywhere!
 
 ### 3. Website
 - Provided in the repo (`Website` folder)
-- Insert your Firebase config into the JS file
+- Insert your Firebase config into the HTML file
 - Host it anywhere (Firebase Hosting recommended)
 
 ### 4. Android App (Optional)
