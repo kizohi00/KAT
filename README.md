@@ -1,4 +1,4 @@
-# ESP32 Buzzer Annoyer (For Fun)
+# Kizohi Annoying Tool (KAT)
 
 This project lets anyone on the internet trigger a buzzer connected to your ESP32 — just to annoy you (or have fun with your friends).
 
