@@ -1,5 +1,7 @@
 # ESP32 Buzzer Annoyer (For Fun)
 
+This project lets anyone on the internet trigger a buzzer connected to your ESP32 — just to annoy you (or have fun with your friends).
+
 This is a fun and simple project built using:
 - An **ESP32**
 - A **passive buzzer**
@@ -7,9 +9,7 @@ This is a fun and simple project built using:
 - A pre-built **Android app**
 - A ready-to-deploy **website interface**
 
-## What It Does
-
-This project lets anyone on the internet trigger a buzzer connected to your ESP32 — just to annoy you (or have fun with your friends).
+## How Does It Works?
 
 1. The ESP32 checks a Firebase Realtime Database every second.
 2. If a button press is detected (from the website or app), the buzzer beeps for **1 second**.
