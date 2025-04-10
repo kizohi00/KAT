@@ -56,7 +56,7 @@ The goal? To give others the ability to trigger your buzzer anytime, anywhere!
 - Host it anywhere (Firebase Hosting recommended)
 
 ### 4. Android App (Optional)
-- Provided in the repo (`android` folder)
+- Provided in the repo (`Android app` folder)
 - Add your Firebase config
 - Build the APK and install it
 - The app will notify the user when the beep has been received by the ESP32
