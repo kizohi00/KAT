@@ -51,7 +51,7 @@ The goal? To give others the ability to trigger your buzzer anytime, anywhere!
 - Upload the code to your ESP32
 
 ### 3. Website
-- Provided in the repo (`web` folder)
+- Provided in the repo (`Website` folder)
 - Insert your Firebase config into the JS file
 - Host it anywhere (Firebase Hosting recommended)
 
